@@ -1,0 +1,24 @@
+version: '2'
+
+services:
+  cj:
+    build:
+      context: .
+      dockerfile: ./casperjs/Dockerfile
+    container_name: cj
+    volumes:
+      - ./scripts:/script
+    links:
+      - nginx
+
+  nginx:
+    build:
+      context: .
+      dockerfile: ./nginx/Dockerfile
+    container_name: nginxserver
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx/conf/conf.d:/etc/nginx/conf.d
+      - ./_log/nginx:/var/log/nginx
+      - ./nginx/html:/usr/share/nginx/html
